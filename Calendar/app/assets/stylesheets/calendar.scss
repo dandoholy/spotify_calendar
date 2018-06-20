@@ -1,0 +1,34 @@
+li {
+  width: 13.6%;
+  list-style: none;
+  display: inline-block
+}
+
+.calendar {
+  width: 100%;
+  justify-content: center;
+}
+
+.month-select {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  text-align: center
+}
+
+.month-select li {
+  width: 20%
+}
+
+.dates li {
+  height: 120px;
+  border: 1px solid black;
+}
+
+.padding {
+  background-color: grey;
+}
+
+#curr-month {
+  width: 60%;
+}
