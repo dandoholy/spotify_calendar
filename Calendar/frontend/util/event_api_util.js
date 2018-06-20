@@ -7,7 +7,7 @@ export const fetchEvent = event_id => {
   );
 }
 
-export const fetchEvents = () => {
+export const fetchAllEvents = () => {
   return (
     $.ajax({
       method: 'get',
