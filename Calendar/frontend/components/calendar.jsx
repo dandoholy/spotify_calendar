@@ -39,7 +39,6 @@ class Calendar extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.currDate !== prevState.currDate) {
-      console.log("shit changed yo")
       let date = new Date(this.state.currDate);
       date.setDate(1);
       date = date.toISOString().split("T")[0]
@@ -63,28 +62,23 @@ class Calendar extends React.Component {
     const dayHeaders = days.map(d =>
       <li key={d}>{d}</li>
     )
+    const {events} = this.props;
+
     const dates = _.range(monthDays[currMonth]).map(d => {
-      if (d + 1 == dateSelected.getDate()) {
-        return <li key={d} className='selected' onClick={() => {
-            let date = new Date(this.state.dateSelected);
-            date.setDate(d + 1);
-            this.setState({dateSelected: date, creatingEvent: [true]});
-          }
-      }>{d+1}</li>
-      } else {
-        return <li key={d} onClick={() => {
-            let date = new Date(this.state.dateSelected);
-            date.setDate(d + 1);
-            this.setState({dateSelected: date, creatingEvent: [true]});
-          }
-      }>{d+1}</li>
+      const classlist = (d + 1 === dateSelected.getDate()) ? "selected" : "";
+      return <li key={d} className={classlist} onClick={() => {
+        let date = new Date(this.state.dateSelected);
+        date.setDate(d + 1);
+        this.setState({dateSelected: date, creatingEvent: [true]});
       }
+      }>{d+1}</li>
     })
     const datePadding = _.range(firstDay).map(d =>
       <li key={d} className='padding'><br></br></li>
     )
 
     const cal = datePadding.concat(dates)
+
 
     return (
       <div className='calendar'>
@@ -107,7 +101,8 @@ class Calendar extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   const currDate = new Date(Date.now())
   return {
-    currDate
+    currDate,
+    events: state.entities.events
   }
 }
 
