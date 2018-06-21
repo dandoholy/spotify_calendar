@@ -9,7 +9,8 @@ class Calendar extends React.Component {
     super(props);
     this.state = {
       currDate: this.props.currDate,
-      dateSelected: new Date(this.props.currDate)
+      dateSelected: new Date(this.props.currDate),
+      creatingEvent: false
     }
   }
 
@@ -47,14 +48,14 @@ class Calendar extends React.Component {
         return <li className='selected' onClick={() => {
             let date = new Date(this.state.dateSelected);
             date.setDate(d + 1);
-            this.setState({dateSelected: date});
+            this.setState({dateSelected: date, creatingEvent: true});
           }
       }>{d+1}</li>
       } else {
         return <li onClick={() => {
             let date = new Date(this.state.dateSelected);
             date.setDate(d + 1);
-            this.setState({dateSelected: date});
+            this.setState({dateSelected: date, creatingEvent: true});
           }
       }>{d+1}</li>
       }
@@ -64,7 +65,6 @@ class Calendar extends React.Component {
     )
 
     const cal = datePadding.concat(dates)
-
     return (
       <div className='calendar'>
         <ul className="month-select">
@@ -77,7 +77,7 @@ class Calendar extends React.Component {
           {datePadding}
           {dates}
         </ul>
-        <CreateEventForm dateString={dateString} />
+        <CreateEventForm creatingEvent={this.state.creatingEvent} dateString={dateString} />
       </div>
     )
   }

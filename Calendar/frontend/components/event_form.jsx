@@ -6,6 +6,7 @@ class EventForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.props.defaultEvent;
+    this.state.creatingEvent = this.props.creatingEvent;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.update = this.update.bind(this);
     this.updateTime = this.updateTime.bind(this);
@@ -22,13 +23,18 @@ class EventForm extends React.Component {
         end_time: end_time.join(" ")
       })
     }
+
+    if (this.props.creatingEvent !== prevProps.creatingEvent) {
+      this.setState({ creatingEvent: this.props.creatingEvent })
+    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
     const event = merge({}, this.state);
+    delete event["creatingEvent"];
     this.props.action(event);
-    this.setState({ description: ''})
+    this.setState({ description: '', creatingEvent: false })
   }
 
   update(field){
@@ -46,8 +52,9 @@ class EventForm extends React.Component {
   }
 
   render() {
+    const classes = (this.state.creatingEvent) ? ["time-options"] : ["time-options hidden"];
     return (
-      <div className='time-options'>
+      <div className={classes}>
         <form onSubmit={this.handleSubmit}>
           Date: {this.props.dateString}
           <br></br>
