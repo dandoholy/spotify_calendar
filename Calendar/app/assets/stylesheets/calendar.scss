@@ -1,9 +1,25 @@
+ul {
+  display: inline-block;
+  list-style: none;
+  -webkit-appearance: none;
+  -webkit-padding-start: 0;
+  width: 100%;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 li {
   width: 13.6%;
   list-style: none;
   display: inline-block;
   margin: 0;
   padding: 0;
+}
+
+.day-headers {
+  text-align: center;
 }
 
 .calendar {
@@ -26,6 +42,7 @@ li {
   height: 120px;
   border: 1px solid black;
   overflow: hidden;
+
 }
 
 .padding {
@@ -46,4 +63,6 @@ li {
 
 .event-index-item {
   width: 100%;
+  font-size: 12px;
+  border: 1px solid red;
 }

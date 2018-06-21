@@ -15,7 +15,8 @@ class EventIndex extends React.Component {
     let list = (events) ? events.map(e => <EventIndexItem event={e} /> ) : null
     return (
       <li onClick={this.props.onClick} className={this.props.classlist}>
-        {this.props.day}
+        <span>{this.props.day}</span>
+        <br></br>
         <ul className="event-index">
           {list}
         </ul>
