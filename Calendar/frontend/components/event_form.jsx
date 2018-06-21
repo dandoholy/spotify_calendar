@@ -67,6 +67,7 @@ class EventForm extends React.Component {
           Description:
           <br></br>
           <textarea value={this.state.description} onChange={this.update('description')}></textarea>
+          <br></br>
           <input className='submit-button' type='submit' value='Create Event' />
         </form>
       </div>

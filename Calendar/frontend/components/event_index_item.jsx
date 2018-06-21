@@ -1,8 +1,12 @@
 import React from 'react';
-import { merge } from 'lodash';
 
-class EventIndexItem extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const EventIndexItem = ({ event }) => {
+  return (
+    <li className="event-index-item">
+      {event.times.start_time} - {event.times.end_time}
+      {event.description}
+    </li>
+  )
 }
+
+export default EventIndexItem;

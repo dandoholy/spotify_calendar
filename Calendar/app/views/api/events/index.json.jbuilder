@@ -7,8 +7,8 @@ byDay = Hash.new {|hash, key| hash[key] = Set.new}
     end
   end
 
-  start_day = event.start_time.to_s(:db).split[0].split("-")[-1]
-  end_day = event.end_time.to_s(:db).split[0].split("-")[-1]
+  start_day = event.start_time.to_s(:short).split[0]
+  end_day = event.end_time.to_s(:short).split[0]
   byDay[start_day].add(event.id)
   byDay[end_day].add(event.id)
 end

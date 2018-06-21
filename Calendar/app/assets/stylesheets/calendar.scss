@@ -1,7 +1,9 @@
 li {
   width: 13.6%;
   list-style: none;
-  display: inline-block
+  display: inline-block;
+  margin: 0;
+  padding: 0;
 }
 
 .calendar {
@@ -20,9 +22,10 @@ li {
   width: 20%
 }
 
-.dates li {
+.dates > li {
   height: 120px;
   border: 1px solid black;
+  overflow: hidden;
 }
 
 .padding {
@@ -39,4 +42,8 @@ li {
 
 .hidden {
   display: none;
+}
+
+.event-index-item {
+  width: 100%;
 }

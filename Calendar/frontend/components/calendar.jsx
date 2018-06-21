@@ -3,6 +3,7 @@ import { merge } from 'lodash';
 import { connect } from 'react-redux';
 
 import CreateEventForm from './create_event_container'
+import EventIndex from './event_index'
 import { fetchAllEvents } from '../actions/event_actions'
 
 class Calendar extends React.Component {
@@ -66,12 +67,12 @@ class Calendar extends React.Component {
 
     const dates = _.range(monthDays[currMonth]).map(d => {
       const classlist = (d + 1 === dateSelected.getDate()) ? "selected" : "";
-      return <li key={d} className={classlist} onClick={() => {
+      return <EventIndex day={d + 1} key={d} classlist={classlist} onClick={() => {
         let date = new Date(this.state.dateSelected);
         date.setDate(d + 1);
         this.setState({dateSelected: date, creatingEvent: [true]});
       }
-      }>{d+1}</li>
+    }/>
     })
     const datePadding = _.range(firstDay).map(d =>
       <li key={d} className='padding'><br></br></li>
