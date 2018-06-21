@@ -34,7 +34,7 @@ class EventForm extends React.Component {
     const event = merge({}, this.state);
     delete event["creatingEvent"];
     this.props.action(event);
-    this.setState({ description: '', creatingEvent: false })
+    this.setState({ description: '', creatingEvent: [false] })
   }
 
   update(field){
@@ -52,7 +52,7 @@ class EventForm extends React.Component {
   }
 
   render() {
-    const classes = (this.state.creatingEvent) ? ["time-options"] : ["time-options hidden"];
+    const classes = (this.state.creatingEvent[0]) ? ["time-options"] : ["time-options hidden"];
     return (
       <div className={classes}>
         <form onSubmit={this.handleSubmit}>

@@ -3,6 +3,7 @@ import { merge } from 'lodash';
 import { connect } from 'react-redux';
 
 import CreateEventForm from './create_event_container'
+import { fetchAllEvents } from '../actions/event_actions'
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -10,12 +11,14 @@ class Calendar extends React.Component {
     this.state = {
       currDate: this.props.currDate,
       dateSelected: new Date(this.props.currDate),
-      creatingEvent: false
+      creatingEvent: [false]
     }
   }
 
   changeMonth(direction) {
-    let {currDate, dateSelected} = this.state
+    let {currDate, dateSelected} = this.state;
+    currDate = new Date(currDate);
+    dateSelected = new Date(dateSelected);
     if (direction == "inc") {
       currDate.setMonth(currDate.getMonth() + 1)
       dateSelected.setMonth(dateSelected.getMonth() + 1)
@@ -24,6 +27,23 @@ class Calendar extends React.Component {
       currDate.setMonth(currDate.getMonth() - 1)
       dateSelected.setMonth(dateSelected.getMonth() - 1)
       this.setState({currDate, dateSelected})
+    }
+  }
+
+  componentDidMount() {
+    let date = new Date(this.state.currDate);
+    date.setDate(1);
+    date = date.toISOString().split("T")[0]
+    this.props.fetchAllEvents(date);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.currDate !== prevState.currDate) {
+      console.log("shit changed yo")
+      let date = new Date(this.state.currDate);
+      date.setDate(1);
+      date = date.toISOString().split("T")[0]
+      this.props.fetchAllEvents(date);
     }
   }
 
@@ -41,30 +61,31 @@ class Calendar extends React.Component {
     let dateString = dateSelected.toISOString().split("T")[0]
 
     const dayHeaders = days.map(d =>
-      <li>{d}</li>
+      <li key={d}>{d}</li>
     )
     const dates = _.range(monthDays[currMonth]).map(d => {
       if (d + 1 == dateSelected.getDate()) {
-        return <li className='selected' onClick={() => {
+        return <li key={d} className='selected' onClick={() => {
             let date = new Date(this.state.dateSelected);
             date.setDate(d + 1);
-            this.setState({dateSelected: date, creatingEvent: true});
+            this.setState({dateSelected: date, creatingEvent: [true]});
           }
       }>{d+1}</li>
       } else {
-        return <li onClick={() => {
+        return <li key={d} onClick={() => {
             let date = new Date(this.state.dateSelected);
             date.setDate(d + 1);
-            this.setState({dateSelected: date, creatingEvent: true});
+            this.setState({dateSelected: date, creatingEvent: [true]});
           }
       }>{d+1}</li>
       }
     })
     const datePadding = _.range(firstDay).map(d =>
-      <li className='padding'><br></br></li>
+      <li key={d} className='padding'><br></br></li>
     )
 
     const cal = datePadding.concat(dates)
+
     return (
       <div className='calendar'>
         <ul className="month-select">
@@ -92,8 +113,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (state, ownProps) => {
   return {
-
+    fetchAllEvents: date => dispatch(fetchAllEvents(date))
   }
 }
 
-export default connect(mapStateToProps, null)(Calendar);
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

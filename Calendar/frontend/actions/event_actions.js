@@ -28,8 +28,8 @@ export const fetchEvent = event_id => dispatch => {
     (event) => dispatch(receiveEvent(event)))
 }
 
-export const fetchAllEvents = () => dispatch => {
-  return EventAPIUtil.fetchAllEvents().then(
+export const fetchAllEvents = (date) => dispatch => {
+  return EventAPIUtil.fetchAllEvents(date).then(
     (events) => dispatch(receiveAllEvents(events))
   )
 }

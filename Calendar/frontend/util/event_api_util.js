@@ -7,11 +7,12 @@ export const fetchEvent = event_id => {
   );
 }
 
-export const fetchAllEvents = () => {
+export const fetchAllEvents = (date) => {
   return (
     $.ajax({
       method: 'get',
-      url: `/api/events/`
+      url: `/api/events/`,
+      data: { event: {date}}
     })
   );
 }
