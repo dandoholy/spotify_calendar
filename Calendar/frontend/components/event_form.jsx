@@ -52,9 +52,11 @@ class EventForm extends React.Component {
   }
 
   render() {
-    const classes = (this.state.creatingEvent[0]) ? ["time-options"] : ["time-options hidden"];
+    const classes = (this.state.creatingEvent[0]) ? ["event-form"] : ["event-form hidden"];
     return (
       <div className={classes}>
+        <span>{this.props.titleStr}</span>
+        <br></br><br></br>
         <form onSubmit={this.handleSubmit}>
           Date: {this.props.dateString}
           <br></br>
@@ -77,28 +79,3 @@ class EventForm extends React.Component {
 }
 
 export default EventForm;
-
-// const hours = _.range(24);
-// const minutes = ["00", "15", "30", "45"];
-//
-// const hourOptions = hours.map((hr, idx) => {
-//   return ( <option key={idx} value={(hr < 10) ? `0${hr}` : String(hr)}>{hr}</option>)
-// });
-// const minOptions = minutes.map((min, idx) => {
-//   return ( <option key={idx} value={(min < 10) ? `0${min}` : String(min)}>{min}</option>)
-// });
-
-// <select className='hour-options'>
-//   {hourOptions}
-// </select>
-// :
-// <select className='min-options'>
-//   {minOptions}
-// </select>
-// <select className='hour-options'>
-//   {hourOptions}
-// </select>
-// :
-// <select className='min-options'>
-//   {minOptions}
-// </select>

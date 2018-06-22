@@ -11,7 +11,8 @@ const mapStateToProps = (state, ownProps) => {
       description: '',
       start_time: ownProps.dateString + " 00:00",
       end_time: ownProps.dateString + " 01:00"
-    }
+    },
+    titleStr: "Create an Event!"
   }
 }
 

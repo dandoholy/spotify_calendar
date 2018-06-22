@@ -20,6 +20,7 @@ li {
 
 .day-headers {
   text-align: center;
+  padding: 5px 0px;
 }
 
 .calendar {
@@ -27,21 +28,35 @@ li {
   justify-content: center;
 }
 
+.del-icon {
+  font-size: 12px;
+  position: absolute;
+  right: -2px;
+  top: -2px;
+  height: 12px;
+}
+
+span {
+  padding: 0 2px;
+}
+
 .month-select {
   width: 100%;
   justify-content: center;
   display: flex;
-  text-align: center
+  text-align: center;
+  border: 3px solid blue;
+  font-size: 24px;
 }
 
 .month-select li {
-  width: 20%
+  width: 20%;
 }
 
 .dates > li {
   height: 120px;
   border: 1px solid black;
-  overflow: hidden;
+  overflow: scroll;
 
 }
 
@@ -51,6 +66,10 @@ li {
 
 .selected {
   background-color: lightblue;
+}
+
+.event-form {
+  border: 5px solid green;
 }
 
 #curr-month {
@@ -65,4 +84,5 @@ li {
   width: 100%;
   font-size: 12px;
   border: 1px solid red;
+  position: relative;
 }

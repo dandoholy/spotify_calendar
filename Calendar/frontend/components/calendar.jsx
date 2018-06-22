@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import CreateEventForm from './create_event_container'
 import EventIndex from './event_index'
 import { fetchAllEvents } from '../actions/event_actions'
+import { localeToInternational } from '../reducers/selectors'
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -34,7 +35,8 @@ class Calendar extends React.Component {
   componentDidMount() {
     let date = new Date(this.state.currDate);
     date.setDate(1);
-    date = date.toISOString().split("T")[0]
+    date = localeToInternational(date.toLocaleDateString());
+    console.log(date)
     this.props.fetchAllEvents(date);
   }
 
@@ -42,7 +44,7 @@ class Calendar extends React.Component {
     if (this.state.currDate !== prevState.currDate) {
       let date = new Date(this.state.currDate);
       date.setDate(1);
-      date = date.toISOString().split("T")[0]
+      date = localeToInternational(date.toLocaleDateString());
       this.props.fetchAllEvents(date);
     }
   }
@@ -58,18 +60,18 @@ class Calendar extends React.Component {
     firstDay = firstDay.getDay()
     let currMonth = currDate.getMonth()
     let dateSelected = this.state.dateSelected
-    let dateString = dateSelected.toISOString().split("T")[0]
+    let dateString = localeToInternational(dateSelected.toLocaleDateString());
 
     const dayHeaders = days.map(d =>
       <li key={d}>{d}</li>
     )
     const {events} = this.props;
 
-    const dates = _.range(monthDays[currMonth]).map(d => {
-      const classlist = (d + 1 === dateSelected.getDate()) ? "selected" : "";
-      return <EventIndex day={d + 1} key={d} classlist={classlist} onClick={() => {
+    const dates = _.range(1, monthDays[currMonth] + 1).map(d => {
+      const classlist = (d === dateSelected.getDate()) ? "selected" : "";
+      return <EventIndex day={d} key={d} classlist={classlist} onClick={() => {
         let date = new Date(this.state.dateSelected);
-        date.setDate(d + 1);
+        date.setDate(d);
         this.setState({dateSelected: date, creatingEvent: [true]});
       }
     }/>
@@ -79,7 +81,6 @@ class Calendar extends React.Component {
     )
 
     const cal = datePadding.concat(dates)
-
 
     return (
       <div className='calendar'>
@@ -93,6 +94,7 @@ class Calendar extends React.Component {
           {datePadding}
           {dates}
         </ul>
+        <br></br>
         <CreateEventForm creatingEvent={this.state.creatingEvent} dateString={dateString} />
       </div>
     )
