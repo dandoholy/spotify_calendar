@@ -17,8 +17,7 @@ class EventIndex extends React.Component {
 
   render() {
     const events = this.props.events;
-    // console.log(events)
-    let list = (events) ? events.map(e => <EventIndexItem event={e} /> ) : null
+    let list = (events) ? events.map(e => <EventIndexItem changeToEdit={this.props.changeToEdit} event={e} /> ) : null
 
     return (
       <li onClick={this.props.onClick} className={this.props.classlist}>

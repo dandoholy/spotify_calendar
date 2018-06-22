@@ -3,6 +3,7 @@ import { merge } from 'lodash';
 import { connect } from 'react-redux';
 
 import CreateEventForm from './create_event_container'
+import UpdateEventForm from './edit_event_container'
 import EventIndex from './event_index'
 import { fetchAllEvents } from '../actions/event_actions'
 import { localeToInternational } from '../reducers/selectors'
@@ -13,8 +14,11 @@ class Calendar extends React.Component {
     this.state = {
       currDate: this.props.currDate,
       dateSelected: new Date(this.props.currDate),
-      creatingEvent: [false]
+      formStatus: "NEITHER",
+      editId: null,
     }
+    this.changeStatus = this.changeStatus.bind(this);
+    this.changeToEdit = this.changeToEdit.bind(this);
   }
 
   changeMonth(direction) {
@@ -24,21 +28,29 @@ class Calendar extends React.Component {
     if (direction == "inc") {
       currDate.setMonth(currDate.getMonth() + 1)
       dateSelected.setMonth(dateSelected.getMonth() + 1)
-      this.setState({currDate, dateSelected})
+      this.setState({currDate, dateSelected, formStatus:"NEITHER"})
     } else {
       currDate.setMonth(currDate.getMonth() - 1)
       dateSelected.setMonth(dateSelected.getMonth() - 1)
-      this.setState({currDate, dateSelected})
+      this.setState({currDate, dateSelected, formStatus:"NEITHER"})
     }
+  }
+
+  changeStatus(formStatus) {
+    this.setState({ formStatus });
+  }
+
+  changeToEdit(formStatus, editId) {
+    this.setState({formStatus, editId});
   }
 
   componentDidMount() {
     let date = new Date(this.state.currDate);
     date.setDate(1);
     date = localeToInternational(date.toLocaleDateString());
-    console.log(date)
     this.props.fetchAllEvents(date);
   }
+
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.currDate !== prevState.currDate) {
@@ -69,10 +81,10 @@ class Calendar extends React.Component {
 
     const dates = _.range(1, monthDays[currMonth] + 1).map(d => {
       const classlist = (d === dateSelected.getDate()) ? "selected" : "";
-      return <EventIndex day={d} key={d} classlist={classlist} onClick={(e) => {
+      return <EventIndex changeToEdit={this.changeToEdit} day={d} key={d} classlist={classlist} onClick={(e) => {
         let date = new Date(this.state.dateSelected);
         date.setDate(d);
-        this.setState({dateSelected: date, creatingEvent: [true]});
+        this.setState({dateSelected: date, formStatus: "CREATING"});
       }
     }/>
     })
@@ -81,6 +93,19 @@ class Calendar extends React.Component {
     )
 
     const cal = datePadding.concat(dates)
+
+    let form;
+    switch(this.state.formStatus) {
+      case "CREATING":
+        form = <CreateEventForm changeStatus={this.changeStatus} dateString={dateString} />
+        break;
+      case "EDITING":
+        form = <UpdateEventForm changeStatus={this.changeStatus} editId={this.state.editId} titleStr="Update Your Event" />
+        break;
+      case "NEITHER":
+        form = null;
+        break;
+    }
 
     return (
       <div className='calendar'>
@@ -95,7 +120,8 @@ class Calendar extends React.Component {
           {dates}
         </ul>
         <br></br>
-        <CreateEventForm creatingEvent={this.state.creatingEvent} dateString={dateString} />
+        <br></br>
+        {form}
       </div>
     )
   }

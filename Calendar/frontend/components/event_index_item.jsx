@@ -12,11 +12,18 @@ class EventIndexItem extends React.Component {
     const {event, removeEvent} = this.props;
     return (
       <li className="event-index-item">
-        <span>Time: {event.times.start_time} - {event.times.end_time}</span>
         <span className='del-icon' onClick={(e) => {
             e.stopPropagation();
             removeEvent(event.id)
           }}>🚮</span>
+        <span className='edit-icon' onClick={(e) => {
+            e.stopPropagation();
+            this.props.changeToEdit("EDITING", event.id);
+          }}>✏️</span>
+        <br></br>
+        <span>Time: {event.times.start_time} - {event.times.end_time}</span>
+
+
         <br></br>
         <span>Description: {event.description}</span>
       </li>

@@ -34,7 +34,8 @@ class EventForm extends React.Component {
     const event = merge({}, this.state);
     delete event["creatingEvent"];
     this.props.action(event);
-    this.setState({ description: '', creatingEvent: [false] })
+    this.props.changeStatus("NEITHER");
+    // this.setState({ description: '', creatingEvent: [false] })
   }
 
   update(field){
@@ -52,9 +53,9 @@ class EventForm extends React.Component {
   }
 
   render() {
-    const classes = (this.state.creatingEvent[0]) ? ["event-form"] : ["event-form hidden"];
+    // const classes = (this.state.creatingEvent[0]) ? ["event-form"] : ["event-form hidden"];
     return (
-      <div className={classes}>
+      <div className="event-form">
         <span>{this.props.titleStr}</span>
         <br></br><br></br>
         <form onSubmit={this.handleSubmit}>
