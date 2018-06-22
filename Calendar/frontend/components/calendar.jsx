@@ -69,7 +69,7 @@ class Calendar extends React.Component {
 
     const dates = _.range(1, monthDays[currMonth] + 1).map(d => {
       const classlist = (d === dateSelected.getDate()) ? "selected" : "";
-      return <EventIndex day={d} key={d} classlist={classlist} onClick={() => {
+      return <EventIndex day={d} key={d} classlist={classlist} onClick={(e) => {
         let date = new Date(this.state.dateSelected);
         date.setDate(d);
         this.setState({dateSelected: date, creatingEvent: [true]});

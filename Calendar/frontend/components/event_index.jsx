@@ -10,9 +10,16 @@ class EventIndex extends React.Component {
     super(props);
   }
 
+  componentDidUpdate(prevProps){
+    if (this.props.events !== prevProps.events) {
+    }
+  }
+
   render() {
     const events = this.props.events;
+    // console.log(events)
     let list = (events) ? events.map(e => <EventIndexItem event={e} /> ) : null
+
     return (
       <li onClick={this.props.onClick} className={this.props.classlist}>
         <span>{this.props.day}</span>

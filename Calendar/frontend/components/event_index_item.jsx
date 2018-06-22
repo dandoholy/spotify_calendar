@@ -3,15 +3,25 @@ import { connect } from 'react-redux';
 
 import { removeEvent, updateEvent } from '../actions/event_actions';
 
-const EventIndexItem = ({ event, removeEvent }) => {
-  return (
-    <li className="event-index-item">
-      <span>Time: {event.times.start_time} - {event.times.end_time}</span>
-      <span className='del-icon' onClick={() => removeEvent(event.id)}>🚮</span>
-      <br></br>
-      <span>Description: {event.description}</span>
-    </li>
-  )
+class EventIndexItem extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const {event, removeEvent} = this.props;
+    return (
+      <li className="event-index-item">
+        <span>Time: {event.times.start_time} - {event.times.end_time}</span>
+        <span className='del-icon' onClick={(e) => {
+            e.stopPropagation();
+            removeEvent(event.id)
+          }}>🚮</span>
+        <br></br>
+        <span>Description: {event.description}</span>
+      </li>
+    )
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
