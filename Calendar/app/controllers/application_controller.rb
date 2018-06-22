@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    @current_user ||= User.find_by(email: "dandoholy@gmail.com")
+    @current_user ||= User.find_by(email: "guest@demo.com")
   end
 end

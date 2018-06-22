@@ -17,7 +17,6 @@ const mapStateToProps = (state, ownProps) => {
   defaultEvent.start_time = start_time;
   defaultEvent.end_time = end_time;
 
-  // debugger
   return {
     defaultEvent,
     dateString: dateString1

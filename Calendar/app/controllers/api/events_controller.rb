@@ -22,7 +22,6 @@ class Api::EventsController < ApplicationController
     date = event_params[:date]
     starter = DateTime.parse(date)
     ender = starter.end_of_month
-    # debugger
     @events = Event.where(start_time: starter..ender).or(Event.where(end_time: starter..ender))
   end
 
