@@ -29,6 +29,10 @@
     "build": "webpack --mode production --module-bind js=babel-loader",
     "postinstall": "dev"
   },
+  "engines": {
+    "node": "^6.10.1",
+    "npm": "^3.10.10"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
