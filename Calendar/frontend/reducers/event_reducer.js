@@ -15,7 +15,7 @@ const byId = (state = {}, action) => {
       return merge({}, action.events.byId);
     case DELETE_EVENT:
       const newState = merge({}, state);
-      delete newState[action.event_id];
+      delete newState[action.event.id];
       return newState;
     default:
       return state
@@ -26,7 +26,7 @@ const byDay = (state = {}, action) => {
   Object.freeze(state);
   switch(action.type) {
     case RECEIVE_EVENT:
-      const {start_day, end_day} = action.event.days;
+      let { start_day, end_day } = action.event.days;
       const arr = (state[start_day]) ? state[start_day].slice() : [];
       const arr2 = (state[end_day]) ? state[end_day].slice() : [];
       if (!arr.includes(action.event.id)) arr.push(action.event.id);
@@ -35,8 +35,14 @@ const byDay = (state = {}, action) => {
     case RECEIVE_ALL_EVENTS:
       return merge({}, action.events.byDay);
     case DELETE_EVENT:
+      start_day = action.event.days.start_day;
+      end_day = action.event.days.end_day;
       const newState = merge({}, state);
-      delete newState[action.event_id];
+      let index;
+      index = newState[start_day].indexOf(action.event.id)
+      newState[start_day].splice(index, 1);
+      index = newState[end_day].indexOf(action.event.id)
+      if (index > -1) newState[end_day].splice(index, 1);
       return newState;
     default:
       return state
